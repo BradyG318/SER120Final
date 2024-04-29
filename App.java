@@ -1,4 +1,5 @@
+import javax.swing.JFrame;
 
-public class App {
-
+public class App extends JFrame {
+	
 }
