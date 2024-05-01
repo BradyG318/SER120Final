@@ -18,6 +18,8 @@ public class MainPanel extends JPanel implements ActionListener {
 	JLabel player, enemy; 
 	ButtonGroup btnGrp;
 	JButton up, down, left, right;
+	ButtonPanel butPan; 
+
 	Dimension d, picSize;
 	int width, height;
 	BufferedImage[] enemies;  //In for testing reasons, I should move this into a dedicated class soon
@@ -29,9 +31,11 @@ public class MainPanel extends JPanel implements ActionListener {
 
 	public MainPanel(App frame) {
 		//Panel setup
+		super(new BorderLayout());
 		width = 500;
 		height = 500; 
 		d = new Dimension(width, height);
+		butPan = new ButtonPanel(frame);
 		this.setSize(d);
 		this.setPreferredSize(d); 
 
@@ -54,8 +58,8 @@ public class MainPanel extends JPanel implements ActionListener {
 			System.out.println("DEBUG-fml");
 		}
 		player = new JLabel(new ImageIcon(playerPic));
-		enemy = new JLabel(new ImageIcon(enemyPic));
-		picSize = new Dimension(30, 30);
+		enemy = new JLabel(new ImageIcon(enemyPic));	
+		picSize = new Dimension(5, 5);
 		player.setSize(picSize); 
 		player.setPreferredSize((picSize));
 		enemy.setSize(picSize);		
@@ -68,10 +72,14 @@ public class MainPanel extends JPanel implements ActionListener {
 		down.addActionListener(this);
 		right.addActionListener(this);
 		left.addActionListener(this);
-		this.add(up, BorderLayout.NORTH);
-		this.add(down, BorderLayout.NORTH);
-		this.add(right, BorderLayout.NORTH);
-		this.add(left, BorderLayout.NORTH);
+
+		butPan.add(up);
+		butPan.add(down);
+		butPan.add(right);
+		butPan.add(left);
+		System.out.println("DEBUG-Buttons");
+		this.add(butPan, BorderLayout.SOUTH);
+		
 
 		timer = new AnimationTimer(this);
 		timer.start();
@@ -83,7 +91,7 @@ public class MainPanel extends JPanel implements ActionListener {
 		System.out.println("DEBUG-Action Performed: " + e.getActionCommand());
 	}
 	public void eBounce() { //Meant to make the enemies fall slowly and bounce of the sides
-		System.out.println("DEBUG-Width/X: " + d.getWidth() + "/" + enemy.getX() + "\nHeight/Y" + d.getHeight() + "/" + enemy.getY());
+		System.out.println("DEBUG-\nWidth/X: " + d.getWidth() + "/" + enemy.getX() + "\nHeight/Y" + d.getHeight() + "/" + enemy.getY());
 		if(enemy.getX() > d.getWidth()) { // If on the right wall
 			dx = -1;
 		} if(enemy.getY() > d.getHeight()) { //If on ground
