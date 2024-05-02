@@ -16,9 +16,9 @@ public class MainPanel extends JPanel implements ActionListener {
 	PlayerShip playShip;
 	BufferedImage playerPic, enemyPic;
 	JLabel player, enemy; 
-	ButtonGroup btnGrp;
-	JButton up, down, left, right;
-	ButtonPanel butPan; 
+	//ButtonGroup btnGrp;
+	//JButton up, down, left, right;
+	//ButtonPanel butPan; 
 
 	Dimension d, picSize;
 	int width, height;
@@ -31,24 +31,24 @@ public class MainPanel extends JPanel implements ActionListener {
 
 	public MainPanel(App frame) {
 		//Panel setup
-		super(new BorderLayout());
+		//super(new BorderLayout());
 		width = 500;
 		height = 500; 
 		d = new Dimension(width, height);
-		butPan = new ButtonPanel(frame);
+		//butPan = new ButtonPanel(frame);
 		this.setSize(d);
 		this.setPreferredSize(d); 
 
 		//Button Intialization
-		btnGrp = new ButtonGroup();
-		up = new JButton("Up");
-		btnGrp.add(up);
-		down = new JButton("Down");
-		btnGrp.add(down);
-		left = new JButton("Left");
-		btnGrp.add(left);
-		right = new JButton("Right");
-		btnGrp.add(right); 
+		// btnGrp = new ButtonGroup();
+		// up = new JButton("Up");
+		// btnGrp.add(up);
+		// down = new JButton("Down");
+		// btnGrp.add(down);
+		// left = new JButton("Left");
+		// btnGrp.add(left);
+		// right = new JButton("Right");
+		// btnGrp.add(right); 
 		
 		//Player spawner
 		try {
@@ -59,26 +59,27 @@ public class MainPanel extends JPanel implements ActionListener {
 		}
 		player = new JLabel(new ImageIcon(playerPic));
 		enemy = new JLabel(new ImageIcon(enemyPic));	
-		picSize = new Dimension(5, 5);
+		picSize = new Dimension(15, 15);
 		player.setSize(picSize); 
 		player.setPreferredSize((picSize));
+		player.setLocation(480, 250);
 		enemy.setSize(picSize);		
 		enemy.setPreferredSize(picSize);
 		this.add(player);
 		this.add(enemy);
 
 		//Button Dump
-		up.addActionListener(this);
-		down.addActionListener(this);
-		right.addActionListener(this);
-		left.addActionListener(this);
+		// up.addActionListener(this);
+		// down.addActionListener(this);
+		// right.addActionListener(this);
+		// left.addActionListener(this);
 
-		butPan.add(up);
-		butPan.add(down);
-		butPan.add(right);
-		butPan.add(left);
+		// butPan.add(up);
+		// butPan.add(down);
+		// butPan.add(right);
+		// butPan.add(left);
 		System.out.println("DEBUG-Buttons");
-		this.add(butPan, BorderLayout.SOUTH);
+		//this.add(butPan, BorderLayout.SOUTH);
 		
 
 		timer = new AnimationTimer(this);
@@ -91,7 +92,7 @@ public class MainPanel extends JPanel implements ActionListener {
 		System.out.println("DEBUG-Action Performed: " + e.getActionCommand());
 	}
 	public void eBounce() { //Meant to make the enemies fall slowly and bounce of the sides
-		System.out.println("DEBUG-\nWidth/X: " + d.getWidth() + "/" + enemy.getX() + "\nHeight/Y" + d.getHeight() + "/" + enemy.getY());
+		//System.out.println("DEBUG-\nWidth/X: " + d.getWidth() + "/" + enemy.getX() + "\nHeight/Y" + d.getHeight() + "/" + enemy.getY());
 		if(enemy.getX() > d.getWidth()) { // If on the right wall
 			dx = -1;
 		} if(enemy.getY() > d.getHeight()) { //If on ground
