@@ -1,3 +1,6 @@
+//Brady Galligan + Aislin Hayes 
+//Professor Gulum 
+//May 4, 2024
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
