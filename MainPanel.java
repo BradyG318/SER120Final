@@ -130,8 +130,8 @@ public class MainPanel extends JPanel  {
 				enemyLoc[0][i] = (int)(3*Math.random());
 			}
 			scorePan.setScore("" + scoreVal);
-			enemies[i].setLocation(enemies[i].getX()+enemyLoc[0][i], enemies[i].getY()+enemyLoc[1][i]);
-			if(enemies[i].getBounds().equals(player.getBounds())) {
+			enemies[i].setLocation(enemies[i].getX()+ );
+			if(enemies[i].getX() >= player.getX() && player.getX()+player.getSize().getWidth() >= enemies[i].getX()) {
 				scorePan.setScore("You died, you lose");
 				timer.stop();
 				break;
