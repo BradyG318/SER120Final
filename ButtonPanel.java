@@ -13,11 +13,13 @@ import javax.swing.JRadioButton;
 public class ButtonPanel extends JPanel implements ActionListener {
     JButton up, down, left, right, start, pause;
     JRadioButton easy, medium, hard, impossible;
+    JRadioButton p1, p2, a1, a2, a3; 
     int numButtons;
     App frame;
+    
     MainPanel main;
     public ButtonPanel(App frame, MainPanel main) {
-        setLayout(new GridLayout(3,4));
+        setLayout(new GridLayout(4,4));
         this.main = main;
         this.frame = frame; 
         up = new JButton("Up");
@@ -61,8 +63,24 @@ public class ButtonPanel extends JPanel implements ActionListener {
         this.add(start);
         this.add(pause);
 
+        a1 = new JRadioButton("Avatar1");
+        a2 = new JRadioButton("Avatar2");
+        a3 = new JRadioButton("Avatar3");
+        p1 = new JRadioButton("");
+        p2 = new JRadioButton("");
 
-        Dimension d = new Dimension(100,40);
+        a1.addActionListener(this);
+        a2.addActionListener(this);
+        a3.addActionListener(this);
+
+        this.add(p1); //I know it's a janky fix, but these are here as placeholders to fill in the gaps
+        this.add(p2);
+
+        this.add(a1);
+        this.add(a2);
+        this.add(a3);
+
+        Dimension d = new Dimension(100,80);
         this.setSize(d);
         this.setPreferredSize(d);
     }
@@ -105,6 +123,15 @@ public class ButtonPanel extends JPanel implements ActionListener {
         break;
         case("Pause"):
         main.gamePause();
+        break;
+        case("Avatar1"):
+        main.setAvatar(0);
+        break;
+        case("Avatar2"):
+        main.setAvatar(1);
+        break;
+        case("Avatar3"):
+        main.setAvatar(2);
         break;
         }
         main.revalidate();

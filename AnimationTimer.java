@@ -7,7 +7,7 @@ public class AnimationTimer extends Timer {
     private MainPanel mp;
 
     public AnimationTimer(MainPanel mp) {
-        super(50, null);
+        super(1, null);
         this.mp = mp;
         this.addActionListener(new MoveListener());
     }

@@ -6,12 +6,15 @@ import javax.swing.JFrame;
 public class App extends JFrame {
 	static MainPanel mainPan;
 	ButtonPanel butPan;
+	ScorePanel scorePan;
 	public App() {
 		super("Your mother");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-	    mainPan = new MainPanel(this);
+		scorePan = new ScorePanel(this);
+		mainPan = new MainPanel(this, scorePan);
 		butPan = new ButtonPanel(this, mainPan);
-	    this.add(mainPan, BorderLayout.NORTH);
+		this.add(scorePan, BorderLayout.NORTH);
+	    this.add(mainPan, BorderLayout.CENTER);
 		this.add(butPan, BorderLayout.SOUTH);
 	    this.pack();
 	    this.setVisible(true);

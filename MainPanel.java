@@ -18,6 +18,11 @@ public class MainPanel extends JPanel  {
 	BufferedImage playerPic, enemyPic;
 	JLabel player, enemy; 
 	JLabel[] enemies; 
+	JLabel score; 
+	int scoreVal;
+
+	int eCount; 
+
 	int[][] enemyLoc;
 	//ButtonGroup btnGrp;
 	//JButton up, down, left, right;
@@ -29,11 +34,18 @@ public class MainPanel extends JPanel  {
 
 	Image scaledEnemyPic;
 
+	ScorePanel scorePan;
+
 	//Movement thingy
 	// int dx = 1;
 	// int dy = 3;
 
-	public MainPanel(App frame) {
+	public MainPanel(App frame, ScorePanel scorePan) {
+		this.scorePan = scorePan;
+		eCount = 0;
+		scoreVal = 0;
+		// score = new JLabel("" + scoreVal);
+		// score.setSize(400, 50);
 		//Panel setup
 		//super(new BorderLayout());
 		this.setLayout(null);
@@ -57,8 +69,8 @@ public class MainPanel extends JPanel  {
 		
 		//Player spawner
 		try {
-			playerPic = ImageIO.read(new File("C:\\Users\\obx31\\OneDrive\\Desktop\\Quinnipiac Stuff\\SER-120 (Object)\\Homework\\Final\\Character.png"));
-			enemyPic = ImageIO.read(new File("C:\\Users\\obx31\\OneDrive\\Desktop\\Quinnipiac Stuff\\SER-120 (Object)\\Homework\\Final\\Enemy.png"));
+			playerPic = ImageIO.read(new File("Character.png"));
+			enemyPic = ImageIO.read(new File("Enemy.png"));
 		} catch(IOException e) {
 			System.out.println("DEBUG-fml");
 		}
@@ -96,35 +108,55 @@ public class MainPanel extends JPanel  {
 
 	public void eBounce() { //Meant to make the enemies fall slowly and bounce of the sides
 		//System.out.println("DEBUG-\nWidth/X: " + d.getWidth() + "/" + enemy.getX() + "\nHeight/Y" + d.getHeight() + "/" + enemy.getY());
-		int dx = 1;
-		int dy = 3;
+		int dx = 3;
+		int dy = 1;
 		for(int i = 0; i<enemies.length; i++) {
 			if(enemies[i].getX() > d.getWidth()) { // If on the right wall
 				enemyLoc[0][i] = -dx;
+				enemyLoc[1][i] = (int)(3*Math.random());
 			} if(enemies[i].getY() > d.getHeight()) { //If on ground
-				enemyLoc[1][i] = -dy;
+				enemies[i].hide();
+				scoreVal++;
+				enemyLoc[0][i] = 0;
+				enemyLoc[1][i] = 0;
+				enemies[i].setLocation(5, 5);
+				// enemyLoc[1][i] = -dy;
+				// enemyLoc[0][i] = (int)(3*Math.random());
 			} if(enemies[i].getX() < 0) { //If on left wall 
 				enemyLoc[0][i] = 1;
+				enemyLoc[1][i] = (int)(3*Math.random());
 			} if(enemies[i].getY() < 0) { //If on roof
 				enemyLoc[1][i] = 3;
+				enemyLoc[0][i] = (int)(3*Math.random());
 			}
+			scorePan.setScore("" + scoreVal);
 			enemies[i].setLocation(enemies[i].getX()+enemyLoc[0][i], enemies[i].getY()+enemyLoc[1][i]);
+			if(enemies[i].getBounds().equals(player.getBounds())) {
+				scorePan.setScore("You died, you lose");
+				timer.stop();
+				break;
+			}
 		}
 		this.revalidate();
 		this.repaint(); 
+		if(eCount == scoreVal) {
+			timer.stop();
+			scorePan.setScore("Congrats, you won the game!"); 
+		}
 		
 	}
 	public void characterMover(int dx, int dy) {
 		player.setLocation(player.getX()+dx, player.getY()+dy);
 	}
 	public void enemySpawner(int eCount) {
+		this.eCount = eCount;
 		enemies = new JLabel[eCount];
 		enemyLoc = new int[2][eCount]; //Saves CHANGE x/y in a 2d Array
 		int tempY = 0;
 		for(int i = 0; i<enemies.length; i++) {
 			enemies[i] = new JLabel(new ImageIcon(scaledEnemyPic));
-			enemyLoc[0][i] = 1;
-			enemyLoc[1][i] = -3;
+			enemyLoc[0][i] = 3;
+			enemyLoc[1][i] = -1;
 			enemies[i].setLocation(0, tempY);
 			enemies[i].setSize(picSize);
 			this.add(enemies[i]);
@@ -137,6 +169,33 @@ public class MainPanel extends JPanel  {
 	}
 	public void gamePause() {
 		timer.stop();
+	}
+	public void setAvatar(int choice) {
+		switch(choice) {
+			case 0:
+			try {
+				playerPic = ImageIO.read(new File("Character.png"));
+			} catch(IOException e) {
+				System.out.println("Read Error");
+			}
+			break;
+			case 1:
+			try {
+				playerPic = ImageIO.read(new File("Character2.png"));
+			} catch(IOException e) {
+				System.out.println("Read Error");
+			}
+			break;
+			case 2:
+			try {
+				playerPic = ImageIO.read(new File("Character3.png"));
+			} catch(IOException e) {
+				System.out.println("Read Error");
+			}
+			break;
+		}
+		this.revalidate();
+		this.repaint();
 	}
 
 	
