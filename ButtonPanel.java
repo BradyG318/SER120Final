@@ -11,14 +11,13 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 public class ButtonPanel extends JPanel implements ActionListener {
-    JButton up, down, left, right, start, pause;
-    JRadioButton easy, medium, hard, impossible;
-    JRadioButton p1, p2, a1, a2, a3, a4; 
-    JButton quit;
-    int numButtons;
-    App frame;
+    private JButton up, down, left, right, start, pause;
+    private JRadioButton easy, medium, hard, impossible;
+    private JRadioButton p1, p2, a1, a2, a3, a4; 
+    private JButton quit;
+    private App frame;
     
-    MainPanel main;
+    private MainPanel main;
     public ButtonPanel(App frame, MainPanel main) {
         setLayout(new GridLayout(5,4));
         this.main = main;

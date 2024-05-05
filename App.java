@@ -3,9 +3,9 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 
 public class App extends JFrame {
-	static MainPanel mainPan;
-	ButtonPanel butPan;
-	ScorePanel scorePan;
+	private static MainPanel mainPan;
+	private ButtonPanel butPan;
+	private ScorePanel scorePan;
 	public App() {
 		super("SER-120 Final");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -9,27 +9,26 @@ import javax.swing.*;
 
 
 public class MainPanel extends JPanel  {
-	PlayerShip playShip;
-	BufferedImage playerPic, enemyPic;
-	JLabel player, enemy; 
-	JLabel[] enemies; 
-	JLabel score; 
-	int scoreVal;
+	private BufferedImage playerPic, enemyPic;
+	private JLabel player, enemy; 
+	private JLabel[] enemies; 
+	private JLabel score; 
+	private int scoreVal;
 
-	int eCount; 
+	private int eCount; 
 
-	int[][] enemyLoc;
+	private int[][] enemyLoc;
 	//ButtonGroup btnGrp;
 	//JButton up, down, left, right;
 	//ButtonPanel butPan; 
 
-	Dimension d, picSize;
-	int width, height;
+	private Dimension d, picSize;
+	private int width, height;
 	private AnimationTimer timer;
 
-	Image scaledEnemyPic;
+	private Image scaledEnemyPic;
 
-	ScorePanel scorePan;
+	private ScorePanel scorePan;
 
 	//Movement thingy
 	// int dx = 1;

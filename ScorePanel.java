@@ -2,8 +2,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class ScorePanel extends JPanel {
-    JLabel score;
+    private JLabel score;
+    private App frame;
     public ScorePanel(App frame) {
+        this.frame = frame;
         score = new JLabel("");
         this.add(score);
 
