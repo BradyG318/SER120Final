@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -12,26 +13,30 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 
-public class MainPanel extends JPanel implements ActionListener {
+public class MainPanel extends JPanel  {
 	PlayerShip playShip;
 	BufferedImage playerPic, enemyPic;
 	JLabel player, enemy; 
+	JLabel[] enemies; 
+	int[][] enemyLoc;
 	//ButtonGroup btnGrp;
 	//JButton up, down, left, right;
 	//ButtonPanel butPan; 
 
 	Dimension d, picSize;
 	int width, height;
-	BufferedImage[] enemies;  //In for testing reasons, I should move this into a dedicated class soon
 	private AnimationTimer timer;
 
+	Image scaledEnemyPic;
+
 	//Movement thingy
-	int dx = 1;
-	int dy = 3;
+	// int dx = 1;
+	// int dy = 3;
 
 	public MainPanel(App frame) {
 		//Panel setup
 		//super(new BorderLayout());
+		this.setLayout(null);
 		width = 500;
 		height = 500; 
 		d = new Dimension(width, height);
@@ -60,13 +65,17 @@ public class MainPanel extends JPanel implements ActionListener {
 		player = new JLabel(new ImageIcon(playerPic));
 		enemy = new JLabel(new ImageIcon(enemyPic));	
 		picSize = new Dimension(15, 15);
+		scaledEnemyPic = enemyPic.getScaledInstance(picSize.width, picSize.height, Image.SCALE_SMOOTH);
+
 		player.setSize(picSize); 
 		player.setPreferredSize((picSize));
-		player.setLocation(480, 250);
+		
 		enemy.setSize(picSize);		
 		enemy.setPreferredSize(picSize);
 		this.add(player);
-		this.add(enemy);
+		//this.add(enemy);
+		player.setLocation(480, 250);
+		//enemy.setLocation(0, 0);
 
 		//Button Dump
 		// up.addActionListener(this);
@@ -83,25 +92,53 @@ public class MainPanel extends JPanel implements ActionListener {
 		
 
 		timer = new AnimationTimer(this);
-		timer.start();
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("DEBUG-Action Performed: " + e.getActionCommand());
-	}
 	public void eBounce() { //Meant to make the enemies fall slowly and bounce of the sides
 		//System.out.println("DEBUG-\nWidth/X: " + d.getWidth() + "/" + enemy.getX() + "\nHeight/Y" + d.getHeight() + "/" + enemy.getY());
-		if(enemy.getX() > d.getWidth()) { // If on the right wall
-			dx = -1;
-		} if(enemy.getY() > d.getHeight()) { //If on ground
-			dy = -3;
-		} if(enemy.getX() < 0) { //If on left wall 
-			dx = 1;
-		} if(enemy.getY() < 0) { //if on roof
-			dy = 3;
+		int dx = 1;
+		int dy = 3;
+		for(int i = 0; i<enemies.length; i++) {
+			if(enemies[i].getX() > d.getWidth()) { // If on the right wall
+				enemyLoc[0][i] = -dx;
+			} if(enemies[i].getY() > d.getHeight()) { //If on ground
+				enemyLoc[1][i] = -dy;
+			} if(enemies[i].getX() < 0) { //If on left wall 
+				enemyLoc[0][i] = 1;
+			} if(enemies[i].getY() < 0) { //If on roof
+				enemyLoc[1][i] = 3;
+			}
+			enemies[i].setLocation(enemies[i].getX()+enemyLoc[0][i], enemies[i].getY()+enemyLoc[1][i]);
 		}
-		enemy.setLocation(enemy.getX()+dx, enemy.getY()+dy);
+		this.revalidate();
+		this.repaint(); 
+		
 	}
+	public void characterMover(int dx, int dy) {
+		player.setLocation(player.getX()+dx, player.getY()+dy);
+	}
+	public void enemySpawner(int eCount) {
+		enemies = new JLabel[eCount];
+		enemyLoc = new int[2][eCount]; //Saves CHANGE x/y in a 2d Array
+		int tempY = 0;
+		for(int i = 0; i<enemies.length; i++) {
+			enemies[i] = new JLabel(new ImageIcon(scaledEnemyPic));
+			enemyLoc[0][i] = 1;
+			enemyLoc[1][i] = -3;
+			enemies[i].setLocation(0, tempY);
+			enemies[i].setSize(picSize);
+			this.add(enemies[i]);
+			tempY += 500/eCount;
+			System.out.println("DEBUG-" + tempY);
+		}
+	}
+	public void gameStart() {
+		timer.start();
+	}
+	public void gamePause() {
+		timer.stop();
+	}
+
+	
 }
+

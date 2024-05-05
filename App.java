@@ -4,13 +4,13 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 public class App extends JFrame {
-	MainPanel mainPan;
+	static MainPanel mainPan;
 	ButtonPanel butPan;
 	public App() {
 		super("Your mother");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	    mainPan = new MainPanel(this);
-		butPan = new ButtonPanel(this);
+		butPan = new ButtonPanel(this, mainPan);
 	    this.add(mainPan, BorderLayout.NORTH);
 		this.add(butPan, BorderLayout.SOUTH);
 	    this.pack();
@@ -19,19 +19,7 @@ public class App extends JFrame {
 	public static void main(String[] args) {
 		App app = new App();
 	}
-	public static void playerMove(int direction) { //Uses an integer to determine player direction (0 = up, 1 = right, 2 = down, 3 = left)
-		switch(direction) {
-			case 0:
-			break;
-			case 1:
-			break;
-			case 2:
-			break;
-			case 3:
-			break;
-			default:
-			System.out.println("DEBUG-ERROR, Invalid Direction");
-			break;
-		}
+	public static void playerMove(int dx, int dy) { //Passes the movement on to the mainPanel for the character
+		mainPan.characterMover(dx, dy);
 	}
 }
