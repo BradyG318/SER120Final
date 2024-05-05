@@ -1,10 +1,5 @@
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -72,7 +67,7 @@ public class MainPanel extends JPanel  {
 			playerPic = ImageIO.read(new File("Character.png"));
 			enemyPic = ImageIO.read(new File("Enemy.png"));
 		} catch(IOException e) {
-			System.out.println("DEBUG-fml");
+			System.out.println("DEBUG-broken");
 		}
 		player = new JLabel(new ImageIcon(playerPic));
 		enemy = new JLabel(new ImageIcon(enemyPic));	
@@ -130,8 +125,8 @@ public class MainPanel extends JPanel  {
 				enemyLoc[0][i] = (int)(3*Math.random());
 			}
 			scorePan.setScore("" + scoreVal);
-			enemies[i].setLocation(enemies[i].getX()+ );
-			if(enemies[i].getX() >= player.getX() && player.getX()+player.getSize().getWidth() >= enemies[i].getX()) {
+			enemies[i].setLocation(enemies[i].getX()+enemyLoc[0][i], enemies[i].getY()+enemyLoc[1][i]);
+			if(player.getBounds().intersects(enemies[i].getBounds())) {
 				scorePan.setScore("You died, you lose");
 				timer.stop();
 				break;
@@ -193,7 +188,14 @@ public class MainPanel extends JPanel  {
 				System.out.println("Read Error");
 			}
 			break;
+			case 3:
+			try {
+				playerPic = ImageIO.read(new File("Enemy.png"));
+			} catch(IOException e) {
+				System.out.println("Read Error");
+			}
 		}
+		player.setIcon(new ImageIcon(playerPic));
 		this.revalidate();
 		this.repaint();
 	}

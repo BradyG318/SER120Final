@@ -1,5 +1,4 @@
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
@@ -8,7 +7,7 @@ public class App extends JFrame {
 	ButtonPanel butPan;
 	ScorePanel scorePan;
 	public App() {
-		super("Your mother");
+		super("SER-120 Final");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		scorePan = new ScorePanel(this);
 		mainPan = new MainPanel(this, scorePan);
