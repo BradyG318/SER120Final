@@ -1,3 +1,6 @@
+//Brady Galligan + Aislin Hayes 
+//Professor Gulum 
+//May 4, 2024
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
